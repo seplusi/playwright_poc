@@ -2,7 +2,7 @@ class converPage(object):
     def __init__(self, page) -> None:
         self.page = page
 
-        self.amount_text_box = page.locator("label").filter(has_text="Amount")
+        self.amount_text_box = page.locator("#amount")
         self.from_curr_combobox = page.locator("#midmarketFromCurrency").get_by_role("combobox", name="Type to search...")
         self.to_curr_combobox = page.locator("#midmarketToCurrency").get_by_role("combobox", name="Type to search...")
         self.convert_btn = page.get_by_role("Button").get_by_text("Convert")
