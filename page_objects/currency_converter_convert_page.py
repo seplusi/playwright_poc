@@ -1,14 +1,24 @@
+from playwright.sync_api import expect
+import re
+
+
 class converPage(object):
-    def __init__(self, page) -> None:
+    def __init__(self, page, url) -> None:
         self.page = page
+        self.page.goto(url)
 
         self.amount_text_box = page.locator("#amount")
+        expect(self.amount_text_box).to_be_visible()
         self.from_curr_combobox = page.locator("#midmarketFromCurrency").get_by_role("combobox", name="Type to search...")
+        expect(self.from_curr_combobox).to_be_visible()
         self.to_curr_combobox = page.locator("#midmarketToCurrency").get_by_role("combobox", name="Type to search...")
+        expect(self.to_curr_combobox).to_be_visible()
         self.convert_btn = page.get_by_role("Button").get_by_text("Convert")
+        expect(self.convert_btn).to_be_visible()
+        self.charts_tab = page.locator('div > a[href="/currencycharts/"]')
+        expect(self.charts_tab).to_be_visible()
 
-    def navigate(self, url):
-        self.page.goto(url)
+        self.view_chart = self.page.get_by_role("button").get_by_text("View chart")
 
     def select_from_currency_brz(self):
         self._select_from_currency('Brazilian', 'BRL Brazilian Real')
@@ -18,6 +28,7 @@ class converPage(object):
 
     def enter_amount(self, amount):
         self.amount_text_box.press("Backspace")
+        expect(self.page.locator('div[aria-live="assertive"][class*="top-1"]')).to_be_visible
         self.amount_text_box.press_sequentially(amount)
         self.amount_text_box.press("Enter")
 

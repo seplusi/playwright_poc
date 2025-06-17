@@ -18,3 +18,12 @@ def firefox_browser():
         page = browser.new_page(no_viewport=True)
         yield page
         browser.close()
+
+@pytest.fixture(scope="function")
+def galaxy_s8_browser():
+    with sync_playwright() as playwright:
+        galaxy_s8 = playwright.devices['Nexus 5X']
+        iphone_browser = playwright.webkit.launch(headless=False)
+        context = iphone_browser.new_context(**galaxy_s8)
+        yield context.new_page()
+        iphone_browser.close()
