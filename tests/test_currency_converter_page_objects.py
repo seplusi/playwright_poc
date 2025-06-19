@@ -86,7 +86,7 @@ def test_currency_converter_charts_chrome(chromium_browser: Page):
     pageObj.charts_tab.click()
 
     # Wait for view chart button
-    expect(pageObj.view_chart).to_be_visible()
+    expect(pageObj.view_chart_btn).to_be_visible()
 
     # Specify the source currency
     pageObj.select_from_currency_brz()
@@ -94,8 +94,24 @@ def test_currency_converter_charts_chrome(chromium_browser: Page):
     # Specify the destination currency
     pageObj.select_to_currency_euro()
     
-    # Convert button is no longer displayed
-    expect(pageObj.charts_tab).to_be_hidden
+    # View chart button is no longer displayed
+    expect(pageObj.view_chart_btn).to_be_hidden()
+
+    # Make elements assertions
+    expect(pageObj.track_curr_btn).to_be_visible()
+    expect(pageObj.view_trnsf_quote_btn).to_be_visible()
+    expect(pageObj.chart_headind1).to_have_text("BRL to EUR Chart")
+    expect(pageObj.chart_headind2).to_have_text(re.compile("^-[0-9].[0-9]{2}%$"))
+    expect(pageObj.chart_heading2_year).to_have_text('(1Y)')
+
+    # Test granularity chart background color
+    expect(pageObj.chart_granularity_1Y).to_have_css("background-color", "rgb(0, 113, 235)")
+    expect(pageObj.chart_granularity_2Y).to_have_css("background-color", "rgb(255, 255, 255)")
+
+    pageObj.chart_granularity_2Y.click()
+    expect(pageObj.chart_heading2_year).to_have_text('(2Y)')
+    expect(pageObj.chart_granularity_2Y).to_have_css("background-color", "rgb(0, 113, 235)")
+    expect(pageObj.chart_granularity_1Y).to_have_css("background-color", "rgb(255, 255, 255)")
 
 def test_currency_converter_charts_firefox(firefox_browser: Page):
     pageObj = converPage(firefox_browser, "https://www.xe.com/")

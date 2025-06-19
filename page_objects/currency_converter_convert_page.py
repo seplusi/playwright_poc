@@ -18,7 +18,16 @@ class converPage(object):
         self.charts_tab = page.locator('div > a[href="/currencycharts/"]')
         expect(self.charts_tab).to_be_visible()
 
-        self.view_chart = self.page.get_by_role("button").get_by_text("View chart")
+        self.view_chart_btn = self.page.get_by_role("button").get_by_text("View chart")
+        self.track_curr_btn = self.page.get_by_role("button").get_by_text("Track currency")
+        self.view_trnsf_quote_btn = self.page.locator('a[href="/send-money/"]').get_by_text("View transfer quote")
+        self.chart_headind1 = self.page.get_by_test_id('chart-container').get_by_role('heading').nth(0)
+        self.chart_headind2 = self.page.get_by_test_id('chart-container').get_by_role('heading').nth(1)
+        self.chart_heading2_year = self.page.locator('div[data-testid="chart-container"] div[style*="margin"] div p')
+
+        self.chart_granularity_1Y = self.page.get_by_test_id('chart-container').get_by_role('button').get_by_text("1Y")
+        self.chart_granularity_2Y = self.page.get_by_test_id('chart-container').get_by_role('button').get_by_text("2Y")
+
 
     def select_from_currency_brz(self):
         self._select_from_currency('Brazilian', 'BRL Brazilian Real')
