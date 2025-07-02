@@ -28,6 +28,8 @@ class converPage(object):
         self.chart_granularity_1Y = self.page.get_by_test_id('chart-container').get_by_role('button').get_by_text("1Y")
         self.chart_granularity_2Y = self.page.get_by_test_id('chart-container').get_by_role('button').get_by_text("2Y")
 
+        self.popup_elements = self.page.locator("yld-tag-host-campaign")
+
 
     def select_from_currency_brz(self):
         self._select_from_currency('Brazilian', 'BRL Brazilian Real')
@@ -39,6 +41,7 @@ class converPage(object):
         self.amount_text_box.press("Backspace")
         expect(self.page.locator('div[aria-live="assertive"][class*="top-1"]')).to_be_visible
         self.amount_text_box.press_sequentially(amount)
+        expect(self.amount_text_box).to_have_value(f"{amount}")
         self.amount_text_box.press("Enter")
 
     def _select_from_currency(self, currency_name, expected_value):
@@ -53,3 +56,7 @@ class converPage(object):
 
     def accept_cookie(self):
         self.page.get_by_role("button").get_by_text("Accept").click()
+
+    def dismiss_popup(self):
+        expect(self.popup_elements).to_have_count(count=5, timeout=30000)
+        self.page.keyboard.press("Escape")
