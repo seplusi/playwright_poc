@@ -39,7 +39,7 @@ class converPage(object):
 
     def enter_amount(self, amount):
         self.amount_text_box.press("Backspace")
-        expect(self.page.locator('div[aria-live="assertive"][class*="top-1"]')).to_be_visible
+        expect(self.page.locator('div[aria-live="assertive"][class*="top-1"]')).to_be_visible()
         self.amount_text_box.press_sequentially(amount)
         expect(self.amount_text_box).to_have_value(f"{amount}")
         self.amount_text_box.press("Enter")

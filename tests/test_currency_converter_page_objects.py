@@ -23,20 +23,14 @@ def test_currency_converter_page_chrome(chromium_browser: Page):
     
     # Click convert button
     page.convert_btn.click()
-    page.convert_btn.is_hidden
+    page.convert_btn.is_hidden()
 
     # Assert conversion result texts
-    locator = page.page.get_by_test_id("conversion").get_by_text(re.compile("Brazilian Reais"))
-    expect(locator).to_have_text('100.00 Brazilian Reais =')
-
-    locator = page.page.get_by_test_id("conversion").locator("p").nth(1)
-    expect(locator).to_have_text(re.compile("^[0-9]{2}.[0-9]{4,6} Euros$"))
-
-    locator = page.page.get_by_test_id("conversion").locator("p").nth(2)
-    expect(locator).to_have_text(re.compile("^1 BRL = 0.[0-9]{4,6} EUR$$"))
-
-    locator = page.page.get_by_test_id("conversion").locator("p").nth(3)
-    expect(locator).to_have_text(re.compile("^1 EUR = [0-9]{1}.[0-9]{4,6} BRL$"))
+    locator = page.page.locator('div[data-testid="conversion"][class*="grid"]')
+    expect(locator.get_by_text(re.compile("Brazilian Real"))).to_have_text('100.00 Brazilian Real =')
+    expect(locator.locator("p").nth(1)).to_have_text(re.compile("^[0-9]{2}.[0-9]{4,6} Euro$"))
+    expect(locator.locator("p").nth(2)).to_have_text(re.compile("^1 BRL = 0.[0-9]{4,6} EUR$$"))
+    expect(locator.locator("p").nth(3)).to_have_text(re.compile("^1 EUR = [0-9]{1}.[0-9]{4,6} BRL$"))
 
 def test_currency_converter_page_firefox(firefox_browser: Page):
     pageObj = converPage(firefox_browser, "https://www.xe.com/")
@@ -58,20 +52,14 @@ def test_currency_converter_page_firefox(firefox_browser: Page):
     
     # Click convert button
     pageObj.convert_btn.click()
-    pageObj.convert_btn.is_hidden
+    pageObj.convert_btn.is_hidden()
 
     # Assert conversion result texts
-    locator = pageObj.page.get_by_test_id("conversion").get_by_text(re.compile("Brazilian Reais"))
-    expect(locator).to_have_text('100.00 Brazilian Reais =')
-
-    locator = pageObj.page.get_by_test_id("conversion").locator("p").nth(1)
-    expect(locator).to_have_text(re.compile("^[0-9]{2}.[0-9]{4,6} Euros$"))
-
-    locator = pageObj.page.get_by_test_id("conversion").locator("p").nth(2)
-    expect(locator).to_have_text(re.compile("^1 BRL = 0.[0-9]{4,6} EUR$$"))
-
-    locator = pageObj.page.get_by_test_id("conversion").locator("p").nth(3)
-    expect(locator).to_have_text(re.compile("^1 EUR = [0-9]{1}.[0-9]{4,6} BRL$"))
+    locator = pageObj.page.locator('div[data-testid="conversion"][class*="grid"]')
+    expect(locator.get_by_text(re.compile("Brazilian Real"))).to_have_text('100.00 Brazilian Real =')
+    expect(locator.locator("p").nth(1)).to_have_text(re.compile("^[0-9]{2}.[0-9]{4,6} Euro$"))
+    expect(locator.locator("p").nth(2)).to_have_text(re.compile("^1 BRL = 0.[0-9]{4,6} EUR$$"))
+    expect(locator.locator("p").nth(3)).to_have_text(re.compile("^1 EUR = [0-9]{1}.[0-9]{4,6} BRL$"))
 
 def test_currency_converter_charts_chrome(chromium_browser: Page):
     pageObj = converPage(chromium_browser, "https://www.xe.com/")
