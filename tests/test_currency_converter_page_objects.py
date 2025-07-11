@@ -23,7 +23,7 @@ def test_currency_converter_page_chrome(chromium_browser: Page):
     
     # Click convert button
     page.convert_btn.click()
-    page.convert_btn.is_hidden()
+    expect(page.convert_btn).to_be_hidden()
 
     # Assert conversion result texts
     locator = page.page.locator('div[data-testid="conversion"][class*="grid"]')
@@ -52,7 +52,7 @@ def test_currency_converter_page_firefox(firefox_browser: Page):
     
     # Click convert button
     pageObj.convert_btn.click()
-    pageObj.convert_btn.is_hidden()
+    expect(pageObj.convert_btn).to_be_hidden()
 
     # Assert conversion result texts
     locator = pageObj.page.locator('div[data-testid="conversion"][class*="grid"]')
